@@ -1,0 +1,402 @@
+var states = [{
+  name: "Alabama",
+  population: 4858979,
+  electoralVotes: 9,
+  area: 52420,
+  medianIncome: 41415,
+  democraticReps: 1,
+  republicanReps: 6
+}, {
+  name: "Alaska",
+  population: 738432,
+  electoralVotes: 3,
+  area: 665384,
+  medianIncome: 60287,
+  democraticReps: 0,
+  republicanReps: 1
+}, {
+  name: "Arizona",
+  population: 6828065,
+  electoralVotes: 11,
+  area: 113990,
+  medianIncome: 46709,
+  democraticReps: 4,
+  republicanReps: 5
+}, {
+  name: "Arkansas",
+  population: 2978204,
+  electoralVotes: 6,
+  area: 53179,
+  medianIncome: 38758,
+  democraticReps: 0,
+  republicanReps: 4
+}, {
+  name: "California",
+  population: 39144818,
+  electoralVotes: 55,
+  area: 163695,
+  medianIncome: 67458,
+  democraticReps: 39,
+  republicanReps: 14
+}, {
+  name: "Colorado",
+  population: 5456574,
+  electoralVotes: 9,
+  area: 104094,
+  medianIncome: 55387,
+  democraticReps: 3,
+  republicanReps: 4
+}, {
+  name: "Connecticut",
+  population: 3590886,
+  electoralVotes: 7,
+  area: 5543,
+  medianIncome: 65753,
+  democraticReps: 5,
+  republicanReps: 0
+}, {
+  name: "Delaware",
+  population: 945934,
+  electoralVotes: 3,
+  area: 2489,
+  medianIncome: 57954,
+  democraticReps: 1,
+  republicanReps: 0
+}, {
+  name: "Florida",
+  population: 20271272,
+  electoralVotes: 29,
+  area: 65758,
+  medianIncome: 44299,
+  democraticReps: 11,
+  republicanReps: 16
+}, {
+  name: "Georgia",
+  population: 10214860,
+  electoralVotes: 16,
+  area: 59425,
+  medianIncome: 46007,
+  democraticReps: 4,
+  republicanReps: 10
+}, {
+  name: "Hawaii",
+  population: 1431603,
+  electoralVotes: 4,
+  area: 10932,
+  medianIncome: 62814,
+  democraticReps: 2,
+  republicanReps: 0
+}, {
+  name: "Idaho",
+  population: 1654930,
+  electoralVotes: 4,
+  area: 83569,
+  medianIncome: 43341,
+  democraticReps: 0,
+  republicanReps: 2
+}, {
+  name: "Illinois",
+  population: 12859995,
+  electoralVotes: 20,
+  area: 57914,
+  medianIncome: 53234,
+  democraticReps: 11,
+  republicanReps: 7
+}, {
+  name: "Indiana",
+  population: 6619680,
+  electoralVotes: 11,
+  area: 36420,
+  medianIncome: 46438,
+  democraticReps: 2,
+  republicanReps: 7
+}, {
+  name: "Iowa",
+  population: 3123899,
+  electoralVotes: 6,
+  area: 56273,
+  medianIncome: 49427,
+  democraticReps: 1,
+  republicanReps: 3
+}, {
+  name: "Kansas",
+  population: 2911641,
+  electoralVotes: 6,
+  area: 82278,
+  medianIncome: 48964,
+  democraticReps: 0,
+  republicanReps: 4
+}, {
+  name: "Kentucky",
+  population: 4425092,
+  electoralVotes: 8,
+  area: 40408,
+  medianIncome: 41141,
+  democraticReps: 1,
+  republicanReps: 5
+}, {
+  name: "Louisiana",
+  population: 4670724,
+  electoralVotes: 8,
+  area: 52378,
+  medianIncome: 41734,
+  democraticReps: 1,
+  republicanReps: 5
+}, {
+  name: "Maine",
+  population: 1329328,
+  electoralVotes: 4,
+  area: 35380,
+  medianIncome: 46033,
+  democraticReps: 1,
+  republicanReps: 1
+}, {
+  name: "Maryland",
+  population: 6006401,
+  electoralVotes: 10,
+  area: 12406,
+  medianIncome: 70004,
+  democraticReps: 7,
+  republicanReps: 1
+}, {
+  name: "Massachusetts",
+  population: 6794422,
+  electoralVotes: 11,
+  area: 10554,
+  medianIncome: 64859,
+  democraticReps: 9,
+  republicanReps: 0
+}, {
+  name: "Michigan",
+  population: 9922576,
+  electoralVotes: 16,
+  area: 96714,
+  medianIncome: 45981,
+  democraticReps: 5,
+  republicanReps: 9
+}, {
+  name: "Minnesota",
+  population: 5489594,
+  electoralVotes: 10,
+  area: 86936,
+  medianIncome: 61814,
+  democraticReps: 3,
+  republicanReps: 5
+}, {
+  name: "Mississippi",
+  population: 2992333,
+  electoralVotes: 6,
+  area: 48432,
+  medianIncome: 36919,
+  democraticReps: 1,
+  republicanReps: 3
+}, {
+  name: "Missouri",
+  population: 6083672,
+  electoralVotes: 10,
+  area: 69707,
+  medianIncome: 45247,
+  democraticReps: 2,
+  republicanReps: 6
+}, {
+  name: "Montana",
+  population: 1032949,
+  electoralVotes: 3,
+  area: 147040,
+  medianIncome: 44222,
+  democraticReps: 0,
+  republicanReps: 1
+}, {
+  name: "Nebraska",
+  population: 1896190,
+  electoralVotes: 5,
+  area: 147040,
+  medianIncome: 50296,
+  democraticReps: 0,
+  republicanReps: 3
+}, {
+  name: "Nevada",
+  population: 2890845,
+  electoralVotes: 6,
+  area: 110572,
+  medianIncome: 48927,
+  democraticReps: 3,
+  republicanReps: 1
+}, {
+  name: "New Hampshire",
+  population: 1330608,
+  electoralVotes: 4,
+  area: 9349,
+  medianIncome: 64712,
+  democraticReps: 2,
+  republicanReps: 0
+}, {
+  name: "New Jersey",
+  population: 8958013,
+  electoralVotes: 14,
+  area: 8723,
+  medianIncome: 69825,
+  democraticReps: 7,
+  republicanReps: 5
+}, {
+  name: "New Mexico",
+  population: 2085109,
+  electoralVotes: 5,
+  area: 121590,
+  medianIncome: 41963,
+  democraticReps: 2,
+  republicanReps: 1
+}, {
+  name: "New York",
+  population: 19795791,
+  electoralVotes: 29,
+  area: 54555,
+  medianIncome: 55246,
+  democraticReps: 18,
+  republicanReps: 9
+}, {
+  name: "North Carolina",
+  population: 10042802,
+  electoralVotes: 15,
+  area: 53819,
+  medianIncome: 43916,
+  democraticReps: 3,
+  republicanReps: 10
+}, {
+  name: "North Dakota",
+  population: 756927,
+  electoralVotes: 3,
+  area: 70698,
+  medianIncome: 51704,
+  democraticReps: 0,
+  republicanReps: 1
+}, {
+  name: "Ohio",
+  population: 11613423,
+  electoralVotes: 18,
+  area: 44826,
+  medianIncome: 45749,
+  democraticReps: 4,
+  republicanReps: 12
+}, {
+  name: "Oklahoma",
+  population: 3911338,
+  electoralVotes: 7,
+  area: 69899,
+  medianIncome: 43225,
+  democraticReps: 0,
+  republicanReps: 5
+}, {
+  name: "Oregon",
+  population: 4028977,
+  electoralVotes: 7,
+  area: 98379,
+  medianIncome: 46816,
+  democraticReps: 4,
+  republicanReps: 1
+}, {
+  name: "Pennsylvania",
+  population: 12802503,
+  electoralVotes: 20,
+  area: 46054,
+  medianIncome: 50228,
+  democraticReps: 5,
+  republicanReps: 13
+}, {
+  name: "Rhode Island",
+  population: 1056298,
+  electoralVotes: 4,
+  area: 1545,
+  medianIncome: 53636,
+  democraticReps: 2,
+  republicanReps: 0
+}, {
+  name: "South Carolina",
+  population: 4896146,
+  electoralVotes: 9,
+  area: 32020,
+  medianIncome: 42367,
+  democraticReps: 1,
+  republicanReps: 6
+}, {
+  name: "South Dakota",
+  population: 858469,
+  electoralVotes: 3,
+  area: 77116,
+  medianIncome: 48321,
+  democraticReps: 0,
+  republicanReps: 1
+}, {
+  name: "Tennessee",
+  population: 6600299,
+  electoralVotes: 11,
+  area: 42144,
+  medianIncome: 41693,
+  democraticReps: 2,
+  republicanReps: 7
+}, {
+  name: "Texas",
+  population: 27469114,
+  electoralVotes: 38,
+  area: 268596,
+  medianIncome: 49392,
+  democraticReps: 11,
+  republicanReps: 25
+}, {
+  name: "Utah",
+  population: 2995919,
+  electoralVotes: 6,
+  area: 84897,
+  medianIncome: 55869,
+  democraticReps: 0,
+  republicanReps: 4
+}, {
+  name: "Vermont",
+  population: 626042,
+  electoralVotes: 3,
+  area: 9616,
+  medianIncome: 52776,
+  democraticReps: 1,
+  republicanReps: 0
+}, {
+  name: "Virginia",
+  population: 8382993,
+  electoralVotes: 13,
+  area: 42775,
+  medianIncome: 62881,
+  democraticReps: 4,
+  republicanReps: 7
+}, {
+  name: "Washington",
+  population: 7170351,
+  electoralVotes: 12,
+  area: 71298,
+  medianIncome: 57835,
+  democraticReps: 6,
+  republicanReps: 4
+}, {
+  name: "West Virginia",
+  population: 1844128,
+  electoralVotes: 5,
+  area: 24230,
+  medianIncome: 38482,
+  democraticReps: 0,
+  republicanReps: 3
+}, {
+  name: "Wisconsin",
+  population: 5771337,
+  electoralVotes: 10,
+  area: 65496,
+  medianIncome: 50395,
+  democraticReps: 3,
+  republicanReps: 5
+}, {
+  name: "Wyoming",
+  population: 586107,
+  electoralVotes: 3,
+  area: 97813,
+  medianIncome: 56322,
+  democraticReps: 0,
+  republicanReps: 1
+}];
+
