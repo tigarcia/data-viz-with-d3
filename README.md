@@ -404,7 +404,7 @@ The _g_ element is used to group other svg elements:
 ```
 
 
-__EXERCISE 2_
+__EXERCISE 2__
 
 Create an svg that has a triangle inside of a square inside of a circle.  Put all of those elements in a group with some shared properties on the group:
 
