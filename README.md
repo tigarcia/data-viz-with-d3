@@ -1059,6 +1059,107 @@ Notice that we not only translated the text elements a bit, we also set the `tex
 
 That's it! We've created a bar chart in d3 using real-world data. What other data would you like to see in bar chart form?
 
+## Tooltips
+
+A typical trick for creating a tool tip is to create a div that will be your tooltip, and then add css to make the position absolute and the opacity initially 0.  Your css might look like this:
+
+```html
+  <style>
+    div.tooltip {
+      position: absolute;
+      text-align: center;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 1em;
+      background: lightgrey;
+    }
+  </style>
+```
+
+Then in your javascript, have d3 create a div and add the tooltip class to it:
+
+```
+  var tooltipDiv = d3.select('body')
+                    .append("div")
+                      .attr('class', 'tooltip')
+                      .style("opacity", 0);
+```
+
+Next, we need to save the rects that we are creating to a variable (called `rects` in this case) and add our mouseover and mouseout events to it:
+
+```
+  rects.on("mouseover", function(d) {
+        // Setting the html inside of our div
+        tooltipDiv.html("<p>"+d.name +"</p>");
+        
+        // Get the value of the height and width of the div
+        // so that we can determine where to place it on the screen
+        var width = parseInt(tooltipDiv.style("width"));
+        var height = parseInt(tooltipDiv.style("height"));
+        
+        
+        // Using absolute positioning, put the left side of the div
+        // where the mouse is minus half of the width of the div
+        // This essentially means the middle of the div will be positioned
+        // where the mouse is on the x axis
+        tooltipDiv.style("left", `${d3.event.pageX - (width / 2)}px`);
+        
+        // Position the y value for the top of the div above the mouse
+        tooltipDiv.style("top", `${d3.event.pageY - height - 20}px`);
+        
+        // Making the div visible
+        tooltipDiv.style("opacity",1);
+     })
+     .on("mouseout", function() {
+      // Hide the div on mouse out
+      tooltipDiv.style("opacity", 0);
+     })
+```
+
+If you run into a problem where the div shows up and then immediately hides, you have have to put the div higher so that it doesn't show up under your mouse and then cause a mouseout event to happen.
+
+
+## D3 Transitions
+
+In D3 we use transitions to animate our visualizations.  Typically, a transition is just starting your data at an initial value and then moving it to another value over time.
+
+If we want to make the bar chart animate in, let's do the following.  First, save the rects that you create for the chart:
+
+```
+ var rects = svg.selectAll("rect")
+   .data(states)
+   .enter()
+   .append("rect")
+     .attr("x", function(d) { return xScale(d.name); })
+     .attr("width", xScale.bandwidth())
+     .attr("y", height - padding.bottom)
+     .attr("height", 0)
+     .attr("fill", function(d) { return colorScale(partisanScore(d)); });
+```
+
+Notice that the height is set to 0 and the y value is set to the bottom of the chart.
+
+Next, we'll add a transition that animates to the full value of each bar:
+
+```
+ // describes our transition.
+ // We can add a ease function here as well
+ var t = d3.transition()
+             .duration(2000);
+ 
+ // Next, add our transition to rects and set the y and
+ // the height to the values that we want to visualized.            
+ rects
+    .transition(t)
+      .ease(d3.easeExpOut) // setting a easeExpOut so it's not a linear animation
+      .attr('y', d=> yScale(d.medianIncome) - padding.bottom + padding.top )
+      .attr('height', (d) => {
+        return height - yScale(d.medianIncome);
+      })
+
+```
+
+You can see all of the pre-defined ease functions in the [d3-ease](https://github.com/d3/d3-ease) repo
 
 ## More Challenges
 
@@ -1189,5 +1290,5 @@ document.addEventListener("DOMContentLoaded", function() {
 We've covered a fair amount of ground when it comes to d3, but there's still plenty left to discover. Here are some other areas to learn about if you're interested:
 
 - Check out the [docs](https://github.com/d3/d3-scale) to learn more about other kinds of scales available in d3.
-- Transitions are another big part of d3 that we haven't talked about! You can learn about them [here](https://github.com/d3/d3-transition).
+- You can learn more about transitions [here](https://github.com/d3/d3-transition).
 - d3's `data` function takes an optional second argument, called a key function. What do these functions do, and what's a good use case for them? ([This](http://code.hazzens.com/d3tut/lesson_4.html) lesson is a good place to start.)
