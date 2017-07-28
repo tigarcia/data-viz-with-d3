@@ -196,6 +196,8 @@ d3.select("body")
 
 If you'd like to read more about the selection API in d3, head over to the [docs](https://github.com/d3/d3-selection).
 
+
+
 ### Passing Functions to D3 Methods
 
 So far we've only passed primitive values into our selection methods. But we can also pass in functions. Check this out:
@@ -229,6 +231,13 @@ Want another example? Try the following:
 3. To determine the color, generate a random number. If it's less than 0.5, set the color to be red. Otherwise, set it to be blue.
 
 Try executing your code several times in the console to ensure that it randomly sets the paragraph's text to be one of these two colors!
+
+__EXERCISE 1__
+
+Using the sample html from above, do the following tasks:
+
+1. Select all the p tags on the page, give the text a random font size, change the background color to black and the text color to orange.
+2. Give the first li on page a padding of 20px
 
 ### Adding to and removing from the DOM with d3
 
@@ -268,11 +277,11 @@ d3.select("h1").on('mouseover', function() {
 
 You can access the event target using `d3.event.target`, or you can simply use the keyword `this`, which will refer to the DOM element that triggered the event. 
 
-__EXERCISE 1__
+__EXERCISE 2__
 
 Use d3 to randomly change an li's color when you click on the li.
 
-<img src="https://d1xwtr0qwr70yv.cloudfront.net/assets/tech/d3-d1310b8d819e261d3a7ed3a5c371496b.svg" style="height:600px">
+<img src="https://avatars3.githubusercontent.com/u/1562726?v=4&s=600" style="height:600px">
 
 ## SVG
 
@@ -404,7 +413,7 @@ The _g_ element is used to group other svg elements:
 ```
 
 
-__EXERCISE 2__
+__EXERCISE 3__
 
 Create an svg that has a triangle inside of a square inside of a circle.  Put all of those elements in a group with some shared properties on the group:
 
@@ -846,14 +855,14 @@ var yScale = d3.scaleLinear()
 If you want finer control over the padding you can set separate values for top, left, right, and bottom. But for now, we'll use one value for all four sides.
 
 
-__EXERCISE 3__
+__EXERCISE 4__
 
 Add a scale to the radius of our points based on the area of the state.
 
 <img src="http://www.clipartkid.com/images/223/gold-weight-scales-icon-psd-psdgraphics-Q2R4yq-clipart.jpg">
 
 
-__EXERCISE 4__
+__EXERCISE 5__
 
 Let's graph a different relationship: median income versus population density. We don't have population density in our objects, but we can calculate it since we know total population and total area! This change will require us to alter how we calculate minima and maxima, as well as the `cx` and `cy` attributes on our circles
 
@@ -1172,6 +1181,17 @@ Given the following [movies data set](https://github.com/rithmschool/intro_to_d3
 
 #### EXERCISE 1
 
+```js
+d3.selectAll("p")
+	.style('color', '#FB5B1F')
+	.style('background-color', 'black')
+	.style('font-size', (d) => ((5 * Math.random()) + .25)+"em");
+
+d3.select("li").style('padding', '20px');
+```
+
+#### EXERCISE 2
+
 
 
 ```javascript
@@ -1180,12 +1200,12 @@ d3.selectAll("li").on('click', function() {
 	var randomRed = Math.floor(Math.random() * 256);
 	var randomBlue = Math.floor(Math.random() * 256);
 	var randomGreen = Math.floor(Math.random() * 256);
-	var randomColor = "rgb("+randomRed+","+randomBlue+","+randomGreen+")";
+	var randomColor = `rgb(${randomRed},${randomBlue},${randomGreen})`;
 	d3.select(this).style('color', randomColor);
 });
 ```
 
-#### EXERCISE 2
+#### EXERCISE 3
 
 ```html
 <svg height="230" width="250">
@@ -1201,7 +1221,7 @@ d3.selectAll("li").on('click', function() {
 ```
 
 
-#### EXERCISE 3
+#### EXERCISE 4
 
 ```js
 document.addEventListener("DOMContentLoaded", function() {
@@ -1247,7 +1267,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 ```
 
-#### EXERCISE 4
+#### EXERCISE 5
 
 ```js
 document.addEventListener("DOMContentLoaded", function() {
