@@ -103,6 +103,10 @@ Let's work with this document:
   	 .intro {
   	   font-size: 6em;
   	 }
+  	 .items {
+  	   color: green;
+  	   font-size: 1.4em;
+  	 }
   </style>
 </head>
 <body>
@@ -222,7 +226,7 @@ d3.selectAll("li")
 
 In this example, we're using d3 to stripe the list, so that every other item has a different background color. How did we do this? Well, in these callback functions, the second argument refers to the index of the element within the current selection group. In d3, this argument is typically denoted `i`. So the callback is basically returning a light gray hex code whenever the index is odd.
 
-What about that first argument in the callback, the one we called `d`? That's a great question! We'll come to that in the next chapter.
+What about that first argument in the callback, the one we called `d`? That's a great question! We'll come to that in the next section.
 
 Want another example? Try the following:
 
@@ -422,18 +426,15 @@ Create an svg that has a triangle inside of a square inside of a circle.  Put al
   <g stroke="black" stroke-width="1">
     <circle cx=110 cy=110 r=100 fill="#006BB6"/>
     <rect x=60 y=60 width=100 height=100 fill="#FDB927"/>
-        <path
-  d="M80 150 L80 80 L150 150Z"
-  fill="rgb(0,255,0)"
-  stroke="black" />
+    <path
+      d="M80 150 L80 80 L150 150Z"
+      fill="rgb(0,255,0)"
+      stroke="black" />
   </g>
 </svg>
 
 
 For more information on SVGs, check out the [MDN docs](https://developer.mozilla.org/en-US/docs/Web/SVG).
-
-Also, Sarah Drasner's talk - [Advanced SVG Animation With Sarah Drasner](https://forwardjs.com/#advanced-svg-animation) - is happening Saturday, March 4th, 2017.
-
 
 ## D3 With SVG
 
@@ -509,7 +510,7 @@ Next, we'll start introducing data into our D3 examples. To begin, let's create 
 </html>
 ```
 
-In the Chrome console and learn about one of the most important d3 methods: the `data` method.
+In the Chrome console, let's learn about one of the most important d3 methods: the `data` method.
 
 Before explaining how this method works, or what it's used for, let's first just examine a quick example:
 
@@ -569,12 +570,12 @@ For example, suppose you have the following html:
   <h1>Things to do</h1>	
   <ul></ul>
   <script src="https://d3js.org/d3.v4.js"></script>
-  <script src="todo.js"></script>
+  <script src="todos.js"></script>
 </body>
 </html>
 ```
 
-In your `todo.js`, let's write out some things to do:
+In your `todos.js`, let's write out some things to do:
 
 ```javascript
 var todos = [
@@ -647,7 +648,6 @@ Let's take a look at another example, this one using an SVG. Here's some HTML:
 Let's draw a bar chart! Take a look at the following code and try to understand it line-by-line:
 
 ```javascript
-// main.js
 const svgWidth = 500;
 const svgHeight = 500;
 const barWidth = 90;
@@ -747,30 +747,27 @@ We'll be using this html:
 </html>
 ```
 
-Start with an empty `population.js` file. The `states.js` file is filled with data on different U.S. states; you can find the data [here](./states.js).
+The `states.js` file is filled with data on different U.S. states; you can find the data [here](./states.js).
 
-To begin, create `app.js`. Let's first use d3 to create an SVG and then bind some circles to the states data.
+Create an `population.js` file. Inside of `population.js`, let's first use d3 to create an SVG and then bind some circles to the states data.
 
 ```js
-document.addEventListener("DOMContentLoaded", function() {
+var width = 500;
+var height = 500;
 
-  var width = 500;
-  var height = 500;
+var svg = d3.select("body")
+          .append("svg")
+            .attr("width", width)
+            .attr("height", height);
 
-  var svg = d3.select("body")
-              .append("svg")
-                .attr("width", width)
-                .attr("height", height);
+svg.selectAll("circle")
+ .data(states)
+ .enter()
+ .append("circle")
+   .attr("cx", function(d) { return d.population; })
+   .attr("cy", function(d) { return d.electoralVotes; })
+   .attr("r", 10);
 
-  svg.selectAll("circle")
-     .data(states)
-     .enter()
-     .append("circle")
-       .attr("cx", function(d) { return d.population; })
-       .attr("cy", function(d) { return d.electoralVotes; })
-       .attr("r", 10);
-
-});
 ```
 
 If you open up your `index.html` in Chrome, you should see a blank screen. You could try to do the following:
@@ -790,6 +787,8 @@ But we would be reinventing the wheel, since D3 already provides scales for us. 
 D3 has built-in functionality for creating and using scales. Here's how we can scale our data to better fit in the SVG:
 
 ```js
+const width = 500;
+const height = 500;
 const xMin = d3.min(states, function(d) { return d.population; });
 const xMax = d3.max(states, function(d) { return d.population; });
 const yMin = d3.min(states, function(d) { return d.electoralVotes; });
@@ -802,6 +801,11 @@ var xScale = d3.scaleLinear()
 var yScale = d3.scaleLinear()
                .domain([yMin,yMax])
                .range([height,0]);
+               
+var svg = d3.select("body")
+          .append("svg")
+            .attr("width", width)
+            .attr("height", height);
 
 svg.selectAll("circle")
    .data(states)
@@ -1006,16 +1010,18 @@ The `padding` method lets us specify how much space we want in between our bars.
 Next, we need to create our rectangles. We'll also need our `partisanScore` function from before, to control the fill of each rectangle:
 
 ```js
-svg.selectAll("rect")
+let rects = svg.selectAll("rect")
    .data(states)
    .enter()
-   .append("rect")
-     .attr("x", function(d) { return xScale(d.name); })
-     .attr("width", xScale.bandwidth())
-     .attr("y", function(d) {return yScale(d.medianIncome) - padding.bottom + padding.top; })
-     .attr("height", function(d) { return height - yScale(d.medianIncome); })
-     .attr("fill", function(d) { return colorScale(partisanScore(d)); });
-     
+   .append("rect");
+
+rects
+	.attr("x", function(d) { return xScale(d.name); })
+	.attr("width", xScale.bandwidth())
+	.attr("y", function(d) {return yScale(d.medianIncome) - padding.bottom + padding.top; })
+	.attr("height", function(d) { return height - yScale(d.medianIncome); })
+	.attr("fill", function(d) { return colorScale(partisanScore(d)); });
+	     
 function partisanScore(d) {
   return d.republicanReps / (d.democraticReps + d.republicanReps);
 }
@@ -1029,7 +1035,7 @@ Finally, we can add our axes. The _y_ axis should look quite familiar:
 
 ```js
 svg.append('g')
-     .attr("transform", "translate(" + padding.left + "," + (-padding.bottom+padding.top) + ")")
+     .attr("transform", `translate(${padding.left},${-padding.bottom+padding.top})`)
      .call(d3.axisLeft(yScale));
 ```
 
@@ -1037,7 +1043,7 @@ However, the _x_ axis requires a bit more care. If we try to do what we did for 
 
 ```js
 svg.append('g')
-     .attr("transform", "translate(0," + (height - padding.bottom+padding.top) + ")")
+     .attr("transform", `translate(0,${height - padding.bottom+padding.top})`)
      .call(d3.axisBottom(xScale))
 ```
 
@@ -1047,7 +1053,7 @@ One solution is to rotate the text by 90°:
 
 ```js
 svg.append('g')
-     .attr("transform", "translate(0," + (height - padding.bottom+padding.top) + ")")
+     .attr("transform", `translate(0,${height - padding.bottom+padding.top})`)
      .call(d3.axisBottom(xScale))
    .selectAll("text")
      .attr("transform", "rotate(90)");
@@ -1057,10 +1063,10 @@ Now the text is vertically aligned, but it's too high up and not quite centered 
 
 ```js
 svg.append('g')
-     .attr("transform", "translate(0," + (height - padding.bottom+padding.top) + ")")
+     .attr("transform", `translate(0,${height - padding.bottom+padding.top})`)
      .call(d3.axisBottom(xScale))
    .selectAll("text")
-     .attr("transform", "rotate(90) translate(" + padding.top + "," + (-3-xScale.bandwidth()/2) + ")")
+     .attr("transform", `rotate(90) translate(${padding.top},${(-3-xScale.bandwidth()/2)})`)
      .style("text-anchor", "start");
 ```
 
@@ -1236,13 +1242,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const rMin = d3.min(states, function(d) { return d.area; });
   const rMax = d3.max(states, function(d) { return d.area; });
 
+  var padding = 20;
+
   var xScale = d3.scaleLinear()
-                 .domain([xMin,xMax])
-                 .range([0,width]);
+                 .domain([xMin, xMax])
+                 .range([padding, width - padding]);
 
   var yScale = d3.scaleLinear()
-                 .domain([yMin,yMax])
-                 .range([height,0]);
+                 .domain([yMin, yMax])
+                 .range([height - padding, padding]);
 
   var rScale = d3.scaleLinear()
                  .domain([rMin, rMax])
